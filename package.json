@@ -1,0 +1,29 @@
+{
+  "name": "ts-starter",
+  "version": "1.0.0",
+  "description": "A starter project to build awesome application with typescript",
+  "main": "build/index.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tecogill/ts-starter.git"
+  },
+  "private": false,
+  "scripts": {
+    "start": "nodemon --watch '*.ts' --exec 'ts-node' ./app/index.ts",
+    "lint": "tslint --project tsconfig.json",
+    "prod": "tsc && node ./build/index.js"
+  },
+  "dependencies": {
+    "global": "^4.4.0",
+    "tslint": "^5.19.0",
+    "typescript": "^3.6.2"
+  },
+  "devDependencies": {
+    "add": "^2.0.6",
+    "nodemon": "^1.19.1",
+    "ts-node-dev": "^1.0.0-pre.42",
+    "tslint-config-airbnb": "^5.11.1",
+    "yarn": "^1.17.3"
+  }
+}
