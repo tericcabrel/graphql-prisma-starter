@@ -1,5 +1,5 @@
 {
-  "name": "ts-starter",
+  "name": "graphql-prisma-starter",
   "version": "1.0.0",
   "description": "A starter project to build awesome application with typescript",
   "main": "build/index.js",
@@ -10,20 +10,29 @@
   },
   "private": false,
   "scripts": {
-    "start": "nodemon --watch '*.ts' --exec 'ts-node' ./app/index.ts",
+    "start": "env-cmd -f ./config/dev.env nodemon -e graphql,ts --exec 'ts-node' ./app/index.ts",
+    "get-schema": "graphql get-schema -p prisma --dotenv config/dev.env",
+    "test": "env-cmd ./config/test.env jest --watch --runInBand",
     "lint": "tslint --project tsconfig.json",
     "prod": "tsc && node ./build/index.js"
   },
   "dependencies": {
-    "global": "^4.4.0",
+    "bcryptjs": "^2.4.3",
+    "env-cmd": "^10.0.1",
+    "graphql-cli": "^3.0.14",
+    "graphql-yoga": "^1.18.3",
+    "jsonwebtoken": "^8.5.1",
+    "prisma-binding": "^2.3.16",
     "tslint": "^5.19.0",
     "typescript": "^3.6.2"
   },
   "devDependencies": {
-    "add": "^2.0.6",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jest": "^24.0.18",
+    "@types/jsonwebtoken": "^8.3.3",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.1",
     "ts-node-dev": "^1.0.0-pre.42",
-    "tslint-config-airbnb": "^5.11.1",
-    "yarn": "^1.17.3"
+    "tslint-config-airbnb": "^5.11.1"
   }
 }

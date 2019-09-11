@@ -1,10 +1,8 @@
-const addition = (a: number, b: number): number => {
-  return a + b;
-};
+// import '@babel/polyfill/noConflict'
+import server from './bootstrap/server';
 
-const number1: number = 5;
-const number2: number = 7;
+const port = parseInt(process.env.PORT || '4000', 10);
 
-const result: number = addition(number1, number2);
-
-console.log('The result is %d', result);
+server.start({ port }, () => {
+  console.log(`🚀 Server ready at http://localhost:${port}/graphql`);
+});
