@@ -3,11 +3,8 @@ import { GraphContext } from '../types/common';
 import { GraphQLResolveInfo } from 'graphql';
 
 const queries = {
-  users(
-    parent: any,
-    args: { [key: string]: any; },
-    { prisma, request }: GraphContext,
-    info: GraphQLResolveInfo,
+  getUsers(
+    parent: any, args: { [key: string]: any; }, { prisma, request }: GraphContext, info: GraphQLResolveInfo,
   ): Promise<any> {
     const userId = getUserId(request);
 
@@ -29,32 +26,30 @@ const queries = {
     return prisma.query.users(opArgs, info);
   },
   me(
-    parent: any,
-    args: { [key: string]: any; },
-    { prisma, request }: GraphContext,
-    info: GraphQLResolveInfo,
+    parent: any, args: any, { prisma, request }: GraphContext, info: GraphQLResolveInfo,
   ): Promise<any> {
     const userId = getUserId(request);
 
-    return prisma.query.user({
+    const query = {
       where: {
         id: userId,
       },
-    });
+    };
+
+    return prisma.query.user(query);
   },
-  user(
-    parent: any,
-    args: any,
-    { prisma, request }: GraphContext,
-    info: GraphQLResolveInfo,
+  getUser(
+    parent: any, args: any, { prisma, request }: GraphContext, info: GraphQLResolveInfo,
   ): Promise<any> {
     const userId = getUserId(request);
 
-    return prisma.query.user({
+    const query = {
       where: {
         id: args.id,
       },
-    });
+    };
+
+    return prisma.query.user(query);
   },
 };
 

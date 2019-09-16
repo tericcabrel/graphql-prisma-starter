@@ -7,10 +7,7 @@ import { GraphQLResolveInfo } from 'graphql';
 
 const mutations = {
   async createUser(
-    parent: any,
-    args: { [key: string]: any; },
-    { prisma }: GraphContext,
-    info: GraphQLResolveInfo,
+    parent: any, args: any, { prisma }: GraphContext, info: GraphQLResolveInfo,
   ): Promise<LoginResult> {
     if (!isValidPassword(args.data.password)) {
       throw new Error('The password is not valid!');
@@ -18,14 +15,15 @@ const mutations = {
 
     const password = await hashPassword(args.data.password);
     const date: Timestamp = timestamp();
-
-    const user = await prisma.mutation.createUser({
+    const query = {
       data: {
         ...args.data,
         password,
         ...date,
       },
-    });
+    };
+
+    const user = await prisma.mutation.createUser(query);
 
     return {
       user,
@@ -33,10 +31,7 @@ const mutations = {
     };
   },
   async login(
-    parent: any,
-    args: { [key: string]: any; },
-    { prisma }: GraphContext,
-    info: GraphQLResolveInfo,
+    parent: any, args: any, { prisma }: GraphContext, info: GraphQLResolveInfo,
   ): Promise<LoginResult> {
     const user = await prisma.query.user({
       where: {
@@ -60,24 +55,20 @@ const mutations = {
     };
   },
   async deleteUser(
-    parent: any,
-    args: { [key: string]: any; },
-    { prisma, request }: GraphContext,
-    info: GraphQLResolveInfo,
+    parent: any, args: any, { prisma, request }: GraphContext, info: GraphQLResolveInfo,
   ): Promise<any> {
     const userId = getUserId(request);
 
-    return prisma.mutation.deleteUser({
+    const query = {
       where: {
         id: userId,
       },
-    },                                info);
+    };
+
+    return prisma.mutation.deleteUser(query, info);
   },
   async updateUser(
-    parent: any,
-    args: { [key: string]: any; },
-    { prisma, request }: GraphContext,
-    info: GraphQLResolveInfo,
+    parent: any, args: any, { prisma, request }: GraphContext, info: GraphQLResolveInfo,
   ): Promise<any> {
     const userId = getUserId(request);
 
@@ -86,29 +77,29 @@ const mutations = {
     }
 
     const date: Timestamp = timestamp();
-
-    return prisma.mutation.updateUser({
+    const query = {
       where: {
         id: userId,
       },
       data: { ...args.data, updated_at: date.updated_at },
-    },                                info);
+    };
+
+    return prisma.mutation.updateUser(query, info);
   },
   async deleteOneUser(
-    parent: any,
-    args: { [key: string]: any; },
-    { prisma, request }: GraphContext,
-    info: GraphQLResolveInfo,
+    parent: any, args: any, { prisma, request }: GraphContext, info: GraphQLResolveInfo,
   ): Promise<any> {
     const userId = getUserId(request);
 
     // TODO Check if the user has the right
 
-    return prisma.mutation.deleteUser({
+    const query = {
       where: {
         id: args.id,
       },
-    },                                info);
+    };
+
+    return prisma.mutation.deleteUser(query, info);
   },
 };
 
