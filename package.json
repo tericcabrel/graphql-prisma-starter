@@ -10,9 +10,9 @@
   },
   "private": false,
   "scripts": {
-    "start": "env-cmd -f ./config/dev.env nodemon -e graphql,ts --exec 'ts-node' ./app/index.ts",
-    "get-schema": "graphql get-schema -p prisma --dotenv config/dev.env",
-    "test": "env-cmd ./config/test.env jest --watch --runInBand",
+    "start": "env-cmd -f env/dev.env nodemon -e graphql,ts --exec 'ts-node' ./app/index.ts",
+    "get-schema": "graphql get-schema -p prisma --dotenv env/dev.env",
+    "test": "env-cmd env/test.env jest --watch --runInBand",
     "lint": "tslint --project tsconfig.json",
     "prod": "tsc && node ./build/index.js"
   },
@@ -24,7 +24,9 @@
     "jsonwebtoken": "^8.5.1",
     "prisma-binding": "^2.3.16",
     "tslint": "^5.19.0",
-    "typescript": "^3.6.2"
+    "typescript": "^3.6.2",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^4.1.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",

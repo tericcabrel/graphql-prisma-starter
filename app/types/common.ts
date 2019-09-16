@@ -11,6 +11,7 @@ export interface IAppConfig {
   PRISMA_ENDPOINT: string;
   PRISMA_SECRET: string;
   JWT_SECRET: string;
+  LOG_DIR: string;
 }
 
 export interface ITokenProps {
