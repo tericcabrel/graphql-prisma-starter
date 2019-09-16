@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import * as config from '../config';
+import * as config from '../core/config';
 import { ITokenProps } from '../types/common';
 
 export const generateToken = (userId: string): string => {
