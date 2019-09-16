@@ -6,9 +6,11 @@ const queries = {
   users(
     parent: any,
     args: { [key: string]: any; },
-    { prisma }: GraphContext,
+    { prisma, request }: GraphContext,
     info: GraphQLResolveInfo,
   ): Promise<any> {
+    const userId = getUserId(request);
+
     const opArgs: any = {
       first: args.first,
       skip: args.skip,
@@ -37,6 +39,20 @@ const queries = {
     return prisma.query.user({
       where: {
         id: userId,
+      },
+    });
+  },
+  user(
+    parent: any,
+    args: any,
+    { prisma, request }: GraphContext,
+    info: GraphQLResolveInfo,
+  ): Promise<any> {
+    const userId = getUserId(request);
+
+    return prisma.query.user({
+      where: {
+        id: args.id,
       },
     });
   },

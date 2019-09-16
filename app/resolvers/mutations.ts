@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
 
-import { hashPassword } from '../utils/helpers';
+import { hashPassword, isValidPassword, timestamp } from '../utils/helpers';
 import { generateToken, getUserId } from '../utils/jwt';
-import { GraphContext, LoginResult } from '../types/common';
+import { GraphContext, LoginResult, Timestamp } from '../types/common';
 import { GraphQLResolveInfo } from 'graphql';
 
 const mutations = {
@@ -12,11 +12,18 @@ const mutations = {
     { prisma }: GraphContext,
     info: GraphQLResolveInfo,
   ): Promise<LoginResult> {
+    if (!isValidPassword(args.data.password)) {
+      throw new Error('The password is not valid!');
+    }
+
     const password = await hashPassword(args.data.password);
+    const date: Timestamp = timestamp();
+
     const user = await prisma.mutation.createUser({
       data: {
         ...args.data,
         password,
+        ...date,
       },
     });
 
@@ -78,11 +85,29 @@ const mutations = {
       args.data.password = await hashPassword(args.data.password);
     }
 
+    const date: Timestamp = timestamp();
+
     return prisma.mutation.updateUser({
       where: {
         id: userId,
       },
-      data: args.data,
+      data: { ...args.data, updated_at: date.updated_at },
+    },                                info);
+  },
+  async deleteOneUser(
+    parent: any,
+    args: { [key: string]: any; },
+    { prisma, request }: GraphContext,
+    info: GraphQLResolveInfo,
+  ): Promise<any> {
+    const userId = getUserId(request);
+
+    // TODO Check if the user has the right
+
+    return prisma.mutation.deleteUser({
+      where: {
+        id: args.id,
+      },
     },                                info);
   },
 };

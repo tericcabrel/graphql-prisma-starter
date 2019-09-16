@@ -16,3 +16,8 @@ export interface IAppConfig {
 export interface ITokenProps {
   userId: string;
 }
+
+export type Timestamp = {
+  created_at: Date;
+  updated_at: Date;
+};
