@@ -15,6 +15,8 @@ export const formatError =  (error: any) => {
     return formatApolloError(error);
   }
 
-  Logger.error({ message: `[${error.path.join(' - ')}] => ${error.message}` });
+  Logger.error({
+    message: `[${ error.path ? error.path.join(' - ') : 'Prisma' }] => ${error.stack ? error.stack.toString() : error.message }`,
+  });
   return error;
 };

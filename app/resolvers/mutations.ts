@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 
 import { hashPassword, isValidPassword, timestamp } from '../utils/helpers';
-import { generateToken, getUserId } from '../utils/jwt';
+import { generateToken } from '../utils/jwt';
 import { GraphContext, LoginResult, Timestamp } from '../types/common';
 import { GraphQLResolveInfo } from 'graphql';
 
@@ -23,12 +23,7 @@ const mutations = {
       },
     };
 
-    const user = await prisma.mutation.createUser(query);
-
-    return {
-      user,
-      token: generateToken(user.id),
-    };
+    return  await prisma.mutation.createUser(query);
   },
   async login(
     parent: any, args: any, { prisma }: GraphContext, info: GraphQLResolveInfo,
@@ -55,10 +50,8 @@ const mutations = {
     };
   },
   async deleteUser(
-    parent: any, args: any, { prisma, request }: GraphContext, info: GraphQLResolveInfo,
+    parent: any, args: any, { prisma, request, userId }: GraphContext, info: GraphQLResolveInfo,
   ): Promise<any> {
-    const userId = getUserId(request);
-
     const query = {
       where: {
         id: userId,
@@ -68,10 +61,8 @@ const mutations = {
     return prisma.mutation.deleteUser(query, info);
   },
   async updateUser(
-    parent: any, args: any, { prisma, request }: GraphContext, info: GraphQLResolveInfo,
+    parent: any, args: any, { prisma, request, userId }: GraphContext, info: GraphQLResolveInfo,
   ): Promise<any> {
-    const userId = getUserId(request);
-
     if (typeof args.data.password === 'string') {
       args.data.password = await hashPassword(args.data.password);
     }
@@ -89,8 +80,6 @@ const mutations = {
   async deleteOneUser(
     parent: any, args: any, { prisma, request }: GraphContext, info: GraphQLResolveInfo,
   ): Promise<any> {
-    const userId = getUserId(request);
-
     // TODO Check if the user has the right
 
     const query = {

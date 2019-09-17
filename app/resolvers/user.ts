@@ -1,11 +1,9 @@
-import { getUserId } from '../utils/jwt';
 import { GraphContext } from '../types/common';
 
 const user = {
   email: {
     fragment: 'fragment userId on User { id }',
-    resolve(parent: any, args: any, { request }: GraphContext, info: any) {
-      const userId = getUserId(request, false);
+    resolve(parent: any, args: any, { request, userId }: GraphContext, info: any) {
       if (userId && userId === parent.id) {
         return parent.email;
       }
