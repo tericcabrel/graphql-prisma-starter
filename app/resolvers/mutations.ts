@@ -1,29 +1,27 @@
 import bcrypt from 'bcryptjs';
-
-import { hashPassword, isValidPassword, timestamp } from '../utils/helpers';
-import { generateToken } from '../utils/jwt';
-import { GraphContext, LoginResult, Timestamp } from '../types/common';
 import { GraphQLResolveInfo } from 'graphql';
 
+import { hashPassword, timestamp } from '../utils/helpers';
+import { generateToken } from '../utils/jwt';
+import { GraphContext, LoginResult, Timestamp } from '../types/common';
+import { createUserSchema } from './validators/user';
+
 const mutations = {
-  async createUser(
-    parent: any, args: any, { prisma }: GraphContext, info: GraphQLResolveInfo,
-  ): Promise<LoginResult> {
-    if (!isValidPassword(args.data.password)) {
-      throw new Error('The password is not valid!');
-    }
+  createUser: {
+    validationSchema: createUserSchema,
+    resolve: async (parent: any, args: any, { prisma }: GraphContext, info: GraphQLResolveInfo): Promise<LoginResult> => {
+      const password = await hashPassword(args.data.password);
+      const date: Timestamp = timestamp();
+      const query = {
+        data: {
+          ...args.data,
+          password,
+          ...date,
+        },
+      };
 
-    const password = await hashPassword(args.data.password);
-    const date: Timestamp = timestamp();
-    const query = {
-      data: {
-        ...args.data,
-        password,
-        ...date,
-      },
-    };
-
-    return  await prisma.mutation.createUser(query);
+      return await prisma.mutation.createUser(query);
+    },
   },
   async login(
     parent: any, args: any, { prisma }: GraphContext, info: GraphQLResolveInfo,
