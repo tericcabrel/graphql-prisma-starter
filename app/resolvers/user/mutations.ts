@@ -1,12 +1,12 @@
 import bcrypt from 'bcryptjs';
 import { GraphQLResolveInfo } from 'graphql';
 
-import { hashPassword, timestamp } from '../utils/helpers';
-import { generateToken } from '../utils/jwt';
-import { GraphContext, LoginResult, Timestamp } from '../types/common';
-import { createUserSchema } from './validators/user';
+import { hashPassword, timestamp } from '../../utils/helpers';
+import { generateToken } from '../../utils/jwt';
+import { GraphContext, LoginResult, Timestamp } from '../../types/common';
+import { createUserSchema } from '../../validators/user';
 
-const mutations = {
+export default {
   createUser: {
     validationSchema: createUserSchema,
     resolve: async (parent: any, args: any, { prisma }: GraphContext, info: GraphQLResolveInfo): Promise<LoginResult> => {
@@ -89,5 +89,3 @@ const mutations = {
     return prisma.mutation.deleteUser(query, info);
   },
 };
-
-export { mutations as default };

@@ -1,7 +1,7 @@
 {
   "projects": {
     "prisma": {
-      "schemaPath": "app/generated/prisma.graphql",
+      "schemaPath": "app/schemas/prisma.graphql",
       "extensions": {
         "prisma": "prisma.yml",
         "endpoints": {

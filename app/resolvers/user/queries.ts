@@ -1,7 +1,8 @@
-import { GraphContext } from '../types/common';
 import { GraphQLResolveInfo } from 'graphql';
 
-const queries = {
+import { GraphContext } from '../../types/common';
+
+export default {
   getUsers(
     parent: any, args: { [key: string]: any; }, { prisma, request, userId }: GraphContext, info: GraphQLResolveInfo,
   ): Promise<any> {
@@ -45,5 +46,3 @@ const queries = {
     return prisma.query.user(query);
   },
 };
-
-export { queries as default };

@@ -1,17 +1,17 @@
-# import UserOrderByInput from '../generated/prisma.graphql'
+# import UserOrderByInput from './prisma.graphql'
 
 type Query {
-    getUsers(query: String, first: Int, skip: Int, after: String, orderBy: UserOrderByInput): [User!]!
-    getUser(id: String!): User
+    findUsers(query: String, first: Int, skip: Int, after: String, orderBy: UserOrderByInput): [User!]!
+    findUser(id: String!): User
     me: User!
 }
 
 type Mutation {
-    createUser(data: CreateUserInput!): User!
+    addUser(data: CreateUserInput!): User!
     login(data: LoginUserInput!): AuthPayload!
-    deleteUser: User!
-    deleteOneUser(id: String!): User!
-    updateUser(data: UpdateUserInput!): User!
+    removeUser: User!
+    removeOneUser(id: String!): User!
+    editUser(data: UpdateUserInput!): User!
 }
 
 # type Subscription {
