@@ -1,16 +1,13 @@
-import path from 'path';
-import { fileLoader, mergeTypes } from 'merge-graphql-schemas';
-import * as fs from 'fs';
+import * as path from 'path';
 
-// Set recursive to true to load files in nested folders
-const typesArray = fileLoader(path.join(__dirname, './'), { recursive: false });
+import { combineSchema } from '../utils/helpers';
 
-// NOTE: 2nd param is optional, and defaults to false
-// Only use if you have defined the same type multiple times in
-// different files and wish to attempt merging them together.
-const typeDefs = mergeTypes(typesArray, { all: true });
+const dirSchemas: string = path.join(__dirname, './');
 
-// Uncomment to create a file which contains all merged file
-fs.writeFileSync('joined.graphql', typeDefs);
+const typeDefs = combineSchema(dirSchemas);
 
-export default typeDefs;
+/* Write the merged schema in a file. Note avoid using nodemon to start the application
+   It sill continuously restart because of the change on joined.graphql */
+// fs.writeFileSync(`${dirSchemas}/joined.graphql`, typeDefs);
+
+export { typeDefs as default };

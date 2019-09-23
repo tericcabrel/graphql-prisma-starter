@@ -837,14 +837,6 @@ apollo-link@1.2.13, apollo-link@^1.2.13, apollo-link@^1.2.3:
     tslib "^1.9.3"
     zen-observable-ts "^0.8.20"
 
-apollo-resolvers@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/apollo-resolvers/-/apollo-resolvers-1.4.1.tgz#eabb592f2d6063398594c36ea97e5c9887dcb66c"
-  integrity sha512-B6BPcJlAKNS95Q1B+thYsYozSc4ieT32CnCRQOM7XMlTIyOIsjA+5fkaBWxW84ar52NL3+tgtJ4tjy60jAuyvg==
-  dependencies:
-    assert "^1.4.1"
-    deepmerge "^1.3.1"
-
 apollo-server-core@^1.3.6, apollo-server-core@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/apollo-server-core/-/apollo-server-core-1.4.0.tgz#4faff7f110bfdd6c3f47008302ae24140f94c592"
@@ -1867,11 +1859,6 @@ deepmerge@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-4.0.0.tgz#3e3110ca29205f120d7cb064960a39c3d2087c09"
   integrity sha512-YZ1rOP5+kHor4hMAH+HRQnBQHg+wvS1un1hAOuIcxcBy0hzcUf6Jg2a1w65kpoOUnurOfZbERwjI1TfZxNjcww==
-
-deepmerge@^1.3.1:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-1.5.2.tgz#10499d868844cdad4fee0842df8c7f6f0c95a753"
-  integrity sha512-95k0GDqvBjZavkuvzx/YqVLv/6YYa17fz6ILMSf7neqQITCPbnfEnQvEgMPNjH4kgobe7+WIL0yJEHku+H3qtQ==
 
 defaults@^1.0.3:
   version "1.0.3"

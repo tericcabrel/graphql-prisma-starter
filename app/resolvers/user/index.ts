@@ -7,7 +7,7 @@ import { GraphContext } from '../../types/common';
 export default {
   Mutation: mutations,
   Query: queries,
-  Subscription: subscriptions,
+  // Subscription: subscriptions,
   User: {
     email: {
       fragment: 'fragment userId on User { id }',

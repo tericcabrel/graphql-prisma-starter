@@ -1,18 +1,4 @@
-/* import { extractFragmentReplacements } from 'prisma-binding';
-import { combineResolvers } from 'apollo-resolvers';
-
-import UserResolver from './user';
-
-const resolvers: any = () => combineResolvers([
-  UserResolver(),
-]);
-
-const fragmentReplacements = extractFragmentReplacements(resolvers);
-
-export { resolvers, fragmentReplacements };*/
-
 import { extractFragmentReplacements } from 'prisma-binding';
-import { combineResolvers } from 'apollo-resolvers';
 
 // import path from 'path';
 // import { fileLoader, mergeResolvers } from 'merge-graphql-schemas';
