@@ -16,6 +16,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  task: (where?: TaskWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -38,6 +39,25 @@ export interface Prisma {
    * Queries
    */
 
+  task: (where: TaskWhereUniqueInput) => TaskNullablePromise;
+  tasks: (args?: {
+    where?: TaskWhereInput;
+    orderBy?: TaskOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Task>;
+  tasksConnection: (args?: {
+    where?: TaskWhereInput;
+    orderBy?: TaskOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => TaskConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -63,6 +83,22 @@ export interface Prisma {
    * Mutations
    */
 
+  createTask: (data: TaskCreateInput) => TaskPromise;
+  updateTask: (args: {
+    data: TaskUpdateInput;
+    where: TaskWhereUniqueInput;
+  }) => TaskPromise;
+  updateManyTasks: (args: {
+    data: TaskUpdateManyMutationInput;
+    where?: TaskWhereInput;
+  }) => BatchPayloadPromise;
+  upsertTask: (args: {
+    where: TaskWhereUniqueInput;
+    create: TaskCreateInput;
+    update: TaskUpdateInput;
+  }) => TaskPromise;
+  deleteTask: (where: TaskWhereUniqueInput) => TaskPromise;
+  deleteManyTasks: (where?: TaskWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -88,6 +124,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  task: (
+    where?: TaskSubscriptionWhereInput
+  ) => TaskSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -100,6 +139,26 @@ export interface ClientConstructor<T> {
 /**
  * Types
  */
+
+export type TaskOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "title_ASC"
+  | "title_DESC"
+  | "description_ASC"
+  | "description_DESC"
+  | "date_ASC"
+  | "date_DESC"
+  | "status_ASC"
+  | "status_DESC"
+  | "is_important_ASC"
+  | "is_important_DESC"
+  | "updated_at_ASC"
+  | "updated_at_DESC"
+  | "created_at_ASC"
+  | "created_at_DESC";
+
+export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -115,8 +174,6 @@ export type UserOrderByInput =
   | "created_at_ASC"
   | "created_at_DESC";
 
-export type MutationType = "CREATED" | "UPDATED" | "DELETED";
-
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
@@ -126,7 +183,21 @@ export interface UserCreateInput {
   created_at: DateTimeInput;
 }
 
-export interface UserUpdateInput {
+export interface TaskUpdateInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  date?: Maybe<DateTimeInput>;
+  status?: Maybe<String>;
+  is_important?: Maybe<Boolean>;
+  updated_at?: Maybe<DateTimeInput>;
+  created_at?: Maybe<DateTimeInput>;
+}
+
+export type TaskWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
@@ -212,10 +283,116 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface UserUpdateManyMutationInput {
-  name?: Maybe<String>;
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
   email?: Maybe<String>;
-  password?: Maybe<String>;
+}>;
+
+export interface TaskCreateInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  description: String;
+  date: DateTimeInput;
+  status: String;
+  is_important: Boolean;
+  updated_at: DateTimeInput;
+  created_at: DateTimeInput;
+}
+
+export interface TaskWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  date?: Maybe<DateTimeInput>;
+  date_not?: Maybe<DateTimeInput>;
+  date_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  date_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  date_lt?: Maybe<DateTimeInput>;
+  date_lte?: Maybe<DateTimeInput>;
+  date_gt?: Maybe<DateTimeInput>;
+  date_gte?: Maybe<DateTimeInput>;
+  status?: Maybe<String>;
+  status_not?: Maybe<String>;
+  status_in?: Maybe<String[] | String>;
+  status_not_in?: Maybe<String[] | String>;
+  status_lt?: Maybe<String>;
+  status_lte?: Maybe<String>;
+  status_gt?: Maybe<String>;
+  status_gte?: Maybe<String>;
+  status_contains?: Maybe<String>;
+  status_not_contains?: Maybe<String>;
+  status_starts_with?: Maybe<String>;
+  status_not_starts_with?: Maybe<String>;
+  status_ends_with?: Maybe<String>;
+  status_not_ends_with?: Maybe<String>;
+  is_important?: Maybe<Boolean>;
+  is_important_not?: Maybe<Boolean>;
+  updated_at?: Maybe<DateTimeInput>;
+  updated_at_not?: Maybe<DateTimeInput>;
+  updated_at_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updated_at_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updated_at_lt?: Maybe<DateTimeInput>;
+  updated_at_lte?: Maybe<DateTimeInput>;
+  updated_at_gt?: Maybe<DateTimeInput>;
+  updated_at_gte?: Maybe<DateTimeInput>;
+  created_at?: Maybe<DateTimeInput>;
+  created_at_not?: Maybe<DateTimeInput>;
+  created_at_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  created_at_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  created_at_lt?: Maybe<DateTimeInput>;
+  created_at_lte?: Maybe<DateTimeInput>;
+  created_at_gt?: Maybe<DateTimeInput>;
+  created_at_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<TaskWhereInput[] | TaskWhereInput>;
+  OR?: Maybe<TaskWhereInput[] | TaskWhereInput>;
+  NOT?: Maybe<TaskWhereInput[] | TaskWhereInput>;
+}
+
+export interface TaskUpdateManyMutationInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  date?: Maybe<DateTimeInput>;
+  status?: Maybe<String>;
+  is_important?: Maybe<Boolean>;
   updated_at?: Maybe<DateTimeInput>;
   created_at?: Maybe<DateTimeInput>;
 }
@@ -231,10 +408,24 @@ export interface UserSubscriptionWhereInput {
   NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
+export interface UserUpdateInput {
+  name?: Maybe<String>;
   email?: Maybe<String>;
-}>;
+  password?: Maybe<String>;
+  updated_at?: Maybe<DateTimeInput>;
+  created_at?: Maybe<DateTimeInput>;
+}
+
+export interface TaskSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TaskWhereInput>;
+  AND?: Maybe<TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput>;
+  OR?: Maybe<TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput>;
+  NOT?: Maybe<TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput>;
+}
 
 export interface NodeNode {
   id: ID_Output;
@@ -257,20 +448,172 @@ export interface UserEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface BatchPayload {
-  count: Long;
+export interface TaskConnection {
+  pageInfo: PageInfo;
+  edges: TaskEdge[];
 }
 
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
+export interface TaskConnectionPromise
+  extends Promise<TaskConnection>,
     Fragmentable {
-  count: () => Promise<Long>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TaskEdge>>() => T;
+  aggregate: <T = AggregateTaskPromise>() => T;
 }
 
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
+export interface TaskConnectionSubscription
+  extends Promise<AsyncIterator<TaskConnection>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TaskEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTaskSubscription>() => T;
+}
+
+export interface UserPreviousValues {
+  id: ID_Output;
+  name: String;
+  email: String;
+  password: String;
+  updated_at: DateTimeOutput;
+  created_at: DateTimeOutput;
+}
+
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  updated_at: () => Promise<DateTimeOutput>;
+  created_at: () => Promise<DateTimeOutput>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  updated_at: () => Promise<AsyncIterator<DateTimeOutput>>;
+  created_at: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TaskSubscriptionPayload {
+  mutation: MutationType;
+  node: Task;
+  updatedFields: String[];
+  previousValues: TaskPreviousValues;
+}
+
+export interface TaskSubscriptionPayloadPromise
+  extends Promise<TaskSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TaskPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TaskPreviousValuesPromise>() => T;
+}
+
+export interface TaskSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TaskSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TaskSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TaskPreviousValuesSubscription>() => T;
+}
+
+export interface TaskPreviousValues {
+  id: ID_Output;
+  title: String;
+  description: String;
+  date: DateTimeOutput;
+  status: String;
+  is_important: Boolean;
+  updated_at: DateTimeOutput;
+  created_at: DateTimeOutput;
+}
+
+export interface TaskPreviousValuesPromise
+  extends Promise<TaskPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  date: () => Promise<DateTimeOutput>;
+  status: () => Promise<String>;
+  is_important: () => Promise<Boolean>;
+  updated_at: () => Promise<DateTimeOutput>;
+  created_at: () => Promise<DateTimeOutput>;
+}
+
+export interface TaskPreviousValuesSubscription
+  extends Promise<AsyncIterator<TaskPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  date: () => Promise<AsyncIterator<DateTimeOutput>>;
+  status: () => Promise<AsyncIterator<String>>;
+  is_important: () => Promise<AsyncIterator<Boolean>>;
+  updated_at: () => Promise<AsyncIterator<DateTimeOutput>>;
+  created_at: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface TaskEdge {
+  node: Task;
+  cursor: String;
+}
+
+export interface TaskEdgePromise extends Promise<TaskEdge>, Fragmentable {
+  node: <T = TaskPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TaskEdgeSubscription
+  extends Promise<AsyncIterator<TaskEdge>>,
+    Fragmentable {
+  node: <T = TaskSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface User {
@@ -313,6 +656,54 @@ export interface UserNullablePromise
   created_at: () => Promise<DateTimeOutput>;
 }
 
+export interface Task {
+  id: ID_Output;
+  title: String;
+  description: String;
+  date: DateTimeOutput;
+  status: String;
+  is_important: Boolean;
+  updated_at: DateTimeOutput;
+  created_at: DateTimeOutput;
+}
+
+export interface TaskPromise extends Promise<Task>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  date: () => Promise<DateTimeOutput>;
+  status: () => Promise<String>;
+  is_important: () => Promise<Boolean>;
+  updated_at: () => Promise<DateTimeOutput>;
+  created_at: () => Promise<DateTimeOutput>;
+}
+
+export interface TaskSubscription
+  extends Promise<AsyncIterator<Task>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  date: () => Promise<AsyncIterator<DateTimeOutput>>;
+  status: () => Promise<AsyncIterator<String>>;
+  is_important: () => Promise<AsyncIterator<Boolean>>;
+  updated_at: () => Promise<AsyncIterator<DateTimeOutput>>;
+  created_at: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface TaskNullablePromise
+  extends Promise<Task | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  date: () => Promise<DateTimeOutput>;
+  status: () => Promise<String>;
+  is_important: () => Promise<Boolean>;
+  updated_at: () => Promise<DateTimeOutput>;
+  created_at: () => Promise<DateTimeOutput>;
+}
+
 export interface UserSubscriptionPayload {
   mutation: MutationType;
   node: User;
@@ -338,25 +729,20 @@ export interface UserSubscriptionPayloadSubscription
   previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
+export interface BatchPayload {
+  count: Long;
 }
 
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
+  count: () => Promise<Long>;
 }
 
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  count: () => Promise<AsyncIterator<Long>>;
 }
 
 export interface PageInfo {
@@ -382,52 +768,39 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateUser {
+export interface AggregateTask {
   count: Int;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
+export interface AggregateTaskPromise
+  extends Promise<AggregateTask>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface AggregateTaskSubscription
+  extends Promise<AsyncIterator<AggregateTask>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface UserPreviousValues {
-  id: ID_Output;
-  name: String;
-  email: String;
-  password: String;
-  updated_at: DateTimeOutput;
-  created_at: DateTimeOutput;
-}
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
 
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  updated_at: () => Promise<DateTimeOutput>;
-  created_at: () => Promise<DateTimeOutput>;
-}
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+*/
+export type Int = number;
 
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  updated_at: () => Promise<AsyncIterator<DateTimeOutput>>;
-  created_at: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
+export type Long = string;
+
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
 
 /*
 DateTime scalar input type, allowing Date
@@ -440,27 +813,9 @@ DateTime scalar output type, which is always a string
 export type DateTimeOutput = string;
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
-
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
-*/
-export type Int = number;
-
-/*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
-
-/*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
-*/
-export type ID_Input = string | number;
-export type ID_Output = string;
-
-export type Long = string;
 
 /**
  * Model Metadata
@@ -469,6 +824,10 @@ export type Long = string;
 export const models: Model[] = [
   {
     name: "User",
+    embedded: false
+  },
+  {
+    name: "Task",
     embedded: false
   }
 ];

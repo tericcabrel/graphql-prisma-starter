@@ -6,3 +6,14 @@ type User {
   updated_at: DateTime!
   created_at: DateTime!
 }
+
+type Task {
+    id: ID! @id
+    title: String!
+    description: String!
+    date: DateTime!
+    status: String!
+    is_important: Boolean!
+    updated_at: DateTime!
+    created_at: DateTime!
+}
