@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Tue Sep 24 2019 04:10:04 GMT+0100 (West Africa Standard Time)
+# timestamp: Tue Sep 24 2019 04:35:17 GMT+0100 (West Africa Standard Time)
 
 type AggregateTask {
   count: Int!
@@ -118,10 +118,8 @@ input TaskCreateInput {
   title: String!
   description: String!
   date: DateTime!
-  status: String!
-  is_important: Boolean!
-  updated_at: DateTime!
-  created_at: DateTime!
+  status: String
+  is_important: Boolean
 }
 
 """An edge in a connection."""
@@ -206,8 +204,6 @@ input TaskUpdateInput {
   date: DateTime
   status: String
   is_important: Boolean
-  updated_at: DateTime
-  created_at: DateTime
 }
 
 input TaskUpdateManyMutationInput {
@@ -216,8 +212,6 @@ input TaskUpdateManyMutationInput {
   date: DateTime
   status: String
   is_important: Boolean
-  updated_at: DateTime
-  created_at: DateTime
 }
 
 input TaskWhereInput {

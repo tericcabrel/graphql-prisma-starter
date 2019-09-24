@@ -189,8 +189,6 @@ export interface TaskUpdateInput {
   date?: Maybe<DateTimeInput>;
   status?: Maybe<String>;
   is_important?: Maybe<Boolean>;
-  updated_at?: Maybe<DateTimeInput>;
-  created_at?: Maybe<DateTimeInput>;
 }
 
 export type TaskWhereUniqueInput = AtLeastOne<{
@@ -293,10 +291,8 @@ export interface TaskCreateInput {
   title: String;
   description: String;
   date: DateTimeInput;
-  status: String;
-  is_important: Boolean;
-  updated_at: DateTimeInput;
-  created_at: DateTimeInput;
+  status?: Maybe<String>;
+  is_important?: Maybe<Boolean>;
 }
 
 export interface TaskWhereInput {
@@ -393,8 +389,6 @@ export interface TaskUpdateManyMutationInput {
   date?: Maybe<DateTimeInput>;
   status?: Maybe<String>;
   is_important?: Maybe<Boolean>;
-  updated_at?: Maybe<DateTimeInput>;
-  created_at?: Maybe<DateTimeInput>;
 }
 
 export interface UserSubscriptionWhereInput {

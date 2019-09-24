@@ -12,8 +12,8 @@ type Task {
     title: String!
     description: String!
     date: DateTime!
-    status: String!
-    is_important: Boolean!
-    updated_at: DateTime!
-    created_at: DateTime!
+    status: String! @default(value: "PENDING")
+    is_important: Boolean! @default(value: false)
+    updated_at: DateTime! @createdAt
+    created_at: DateTime! @updatedAt
 }

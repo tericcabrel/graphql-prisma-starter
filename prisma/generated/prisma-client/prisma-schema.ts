@@ -87,10 +87,8 @@ input TaskCreateInput {
   title: String!
   description: String!
   date: DateTime!
-  status: String!
-  is_important: Boolean!
-  updated_at: DateTime!
-  created_at: DateTime!
+  status: String
+  is_important: Boolean
 }
 
 type TaskEdge {
@@ -152,8 +150,6 @@ input TaskUpdateInput {
   date: DateTime
   status: String
   is_important: Boolean
-  updated_at: DateTime
-  created_at: DateTime
 }
 
 input TaskUpdateManyMutationInput {
@@ -162,8 +158,6 @@ input TaskUpdateManyMutationInput {
   date: DateTime
   status: String
   is_important: Boolean
-  updated_at: DateTime
-  created_at: DateTime
 }
 
 input TaskWhereInput {

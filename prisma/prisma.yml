@@ -7,7 +7,7 @@ generate:
 hooks:
   post-deploy:
     - echo "Deployment completed"
-    - cd prisma && graphql get-schema -p prisma --dotenv ../env/dev.env
+    - graphql get-schema -p prisma --dotenv ../env/dev.env
     # The `prisma generate` command was executed twice. Since Prisma 1.31, the Prisma client is generated automatically
     # after running `prisma deploy`. It is not necessary to generate it via a `post-deploy` hook any more.
     # - prisma generate
