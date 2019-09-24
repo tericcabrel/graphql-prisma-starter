@@ -18,9 +18,20 @@ type Mutation {
 #
 #}
 
-type AuthPayload {
-    token: String!
-    user: User!
+type User {
+    id: ID!
+    name: String!
+    email: String
+    password: String
+    tasks: [Task!]!
+    updated_at: String!
+    created_at: String!
+}
+
+enum MutationType {
+    CREATED
+    UPDATED
+    DELETED
 }
 
 input CreateUserInput {
@@ -40,17 +51,7 @@ input UpdateUserInput {
     password: String
 }
 
-type User {
-    id: ID!
-    name: String!
-    email: String
-    password: String
-    updated_at: String!
-    created_at: String!
-}
-
-enum MutationType {
-    CREATED
-    UPDATED
-    DELETED
+type AuthPayload {
+    token: String!
+    user: User!
 }

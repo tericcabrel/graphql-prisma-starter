@@ -21,6 +21,7 @@ type Task {
     date: DateTime!
     status: TaskStatusType!
     is_important: Boolean!
+    creator: User!
     updated_at: DateTime!
     created_at: DateTime!
 }
@@ -30,6 +31,12 @@ enum TaskStatusType {
     ONGOING
     DONE
     CANCELLED
+}
+
+enum TaskMutationType {
+    CREATED
+    UPDATED
+    DELETED
 }
 
 input CreateTaskInput {
@@ -46,12 +53,6 @@ input UpdateTaskInput {
     data: DateTime
     status: TaskStatusType
     is_important: Boolean
-}
-
-enum TaskMutationType {
-    CREATED
-    UPDATED
-    DELETED
 }
 
 type TaskSubscriptionPayload {

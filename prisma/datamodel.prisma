@@ -1,19 +1,21 @@
-type User {
+type User @db(name: "users") {
   id: ID! @id
   name: String!
   email: String! @unique
   password: String!
   updated_at: DateTime!
   created_at: DateTime!
+  tasks: [Task!]! @relation(name: "TaskOfUser", onDelete: CASCADE)
 }
 
-type Task {
+type Task @db(name: "tasks"){
     id: ID! @id
     title: String!
     description: String!
     date: DateTime!
     status: String! @default(value: "PENDING")
-    is_important: Boolean! @default(value: false)
+    is_important: Boolean! @default(value: false) @db(name: "important")
+    creator: User! @relation(name: "TaskOfUser")
     updated_at: DateTime! @createdAt
     created_at: DateTime! @updatedAt
 }

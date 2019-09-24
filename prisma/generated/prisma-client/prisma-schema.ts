@@ -72,6 +72,7 @@ type Task {
   date: DateTime!
   status: String!
   is_important: Boolean!
+  creator: User!
   updated_at: DateTime!
   created_at: DateTime!
 }
@@ -83,6 +84,21 @@ type TaskConnection {
 }
 
 input TaskCreateInput {
+  id: ID
+  title: String!
+  description: String!
+  date: DateTime!
+  status: String
+  is_important: Boolean
+  creator: UserCreateOneWithoutTasksInput!
+}
+
+input TaskCreateManyWithoutCreatorInput {
+  create: [TaskCreateWithoutCreatorInput!]
+  connect: [TaskWhereUniqueInput!]
+}
+
+input TaskCreateWithoutCreatorInput {
   id: ID
   title: String!
   description: String!
@@ -126,41 +142,7 @@ type TaskPreviousValues {
   created_at: DateTime!
 }
 
-type TaskSubscriptionPayload {
-  mutation: MutationType!
-  node: Task
-  updatedFields: [String!]
-  previousValues: TaskPreviousValues
-}
-
-input TaskSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: TaskWhereInput
-  AND: [TaskSubscriptionWhereInput!]
-  OR: [TaskSubscriptionWhereInput!]
-  NOT: [TaskSubscriptionWhereInput!]
-}
-
-input TaskUpdateInput {
-  title: String
-  description: String
-  date: DateTime
-  status: String
-  is_important: Boolean
-}
-
-input TaskUpdateManyMutationInput {
-  title: String
-  description: String
-  date: DateTime
-  status: String
-  is_important: Boolean
-}
-
-input TaskWhereInput {
+input TaskScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -243,6 +225,174 @@ input TaskWhereInput {
   created_at_lte: DateTime
   created_at_gt: DateTime
   created_at_gte: DateTime
+  AND: [TaskScalarWhereInput!]
+  OR: [TaskScalarWhereInput!]
+  NOT: [TaskScalarWhereInput!]
+}
+
+type TaskSubscriptionPayload {
+  mutation: MutationType!
+  node: Task
+  updatedFields: [String!]
+  previousValues: TaskPreviousValues
+}
+
+input TaskSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TaskWhereInput
+  AND: [TaskSubscriptionWhereInput!]
+  OR: [TaskSubscriptionWhereInput!]
+  NOT: [TaskSubscriptionWhereInput!]
+}
+
+input TaskUpdateInput {
+  title: String
+  description: String
+  date: DateTime
+  status: String
+  is_important: Boolean
+  creator: UserUpdateOneRequiredWithoutTasksInput
+}
+
+input TaskUpdateManyDataInput {
+  title: String
+  description: String
+  date: DateTime
+  status: String
+  is_important: Boolean
+}
+
+input TaskUpdateManyMutationInput {
+  title: String
+  description: String
+  date: DateTime
+  status: String
+  is_important: Boolean
+}
+
+input TaskUpdateManyWithoutCreatorInput {
+  create: [TaskCreateWithoutCreatorInput!]
+  delete: [TaskWhereUniqueInput!]
+  connect: [TaskWhereUniqueInput!]
+  set: [TaskWhereUniqueInput!]
+  disconnect: [TaskWhereUniqueInput!]
+  update: [TaskUpdateWithWhereUniqueWithoutCreatorInput!]
+  upsert: [TaskUpsertWithWhereUniqueWithoutCreatorInput!]
+  deleteMany: [TaskScalarWhereInput!]
+  updateMany: [TaskUpdateManyWithWhereNestedInput!]
+}
+
+input TaskUpdateManyWithWhereNestedInput {
+  where: TaskScalarWhereInput!
+  data: TaskUpdateManyDataInput!
+}
+
+input TaskUpdateWithoutCreatorDataInput {
+  title: String
+  description: String
+  date: DateTime
+  status: String
+  is_important: Boolean
+}
+
+input TaskUpdateWithWhereUniqueWithoutCreatorInput {
+  where: TaskWhereUniqueInput!
+  data: TaskUpdateWithoutCreatorDataInput!
+}
+
+input TaskUpsertWithWhereUniqueWithoutCreatorInput {
+  where: TaskWhereUniqueInput!
+  update: TaskUpdateWithoutCreatorDataInput!
+  create: TaskCreateWithoutCreatorInput!
+}
+
+input TaskWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime!]
+  date_not_in: [DateTime!]
+  date_lt: DateTime
+  date_lte: DateTime
+  date_gt: DateTime
+  date_gte: DateTime
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  is_important: Boolean
+  is_important_not: Boolean
+  creator: UserWhereInput
+  updated_at: DateTime
+  updated_at_not: DateTime
+  updated_at_in: [DateTime!]
+  updated_at_not_in: [DateTime!]
+  updated_at_lt: DateTime
+  updated_at_lte: DateTime
+  updated_at_gt: DateTime
+  updated_at_gte: DateTime
+  created_at: DateTime
+  created_at_not: DateTime
+  created_at_in: [DateTime!]
+  created_at_not_in: [DateTime!]
+  created_at_lt: DateTime
+  created_at_lte: DateTime
+  created_at_gt: DateTime
+  created_at_gte: DateTime
   AND: [TaskWhereInput!]
   OR: [TaskWhereInput!]
   NOT: [TaskWhereInput!]
@@ -259,6 +409,7 @@ type User {
   password: String!
   updated_at: DateTime!
   created_at: DateTime!
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
 }
 
 type UserConnection {
@@ -268,6 +419,21 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  updated_at: DateTime!
+  created_at: DateTime!
+  tasks: TaskCreateManyWithoutCreatorInput
+}
+
+input UserCreateOneWithoutTasksInput {
+  create: UserCreateWithoutTasksInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutTasksInput {
   id: ID
   name: String!
   email: String!
@@ -329,6 +495,7 @@ input UserUpdateInput {
   password: String
   updated_at: DateTime
   created_at: DateTime
+  tasks: TaskUpdateManyWithoutCreatorInput
 }
 
 input UserUpdateManyMutationInput {
@@ -337,6 +504,26 @@ input UserUpdateManyMutationInput {
   password: String
   updated_at: DateTime
   created_at: DateTime
+}
+
+input UserUpdateOneRequiredWithoutTasksInput {
+  create: UserCreateWithoutTasksInput
+  update: UserUpdateWithoutTasksDataInput
+  upsert: UserUpsertWithoutTasksInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutTasksDataInput {
+  name: String
+  email: String
+  password: String
+  updated_at: DateTime
+  created_at: DateTime
+}
+
+input UserUpsertWithoutTasksInput {
+  update: UserUpdateWithoutTasksDataInput!
+  create: UserCreateWithoutTasksInput!
 }
 
 input UserWhereInput {
@@ -412,6 +599,9 @@ input UserWhereInput {
   created_at_lte: DateTime
   created_at_gt: DateTime
   created_at_gte: DateTime
+  tasks_every: TaskWhereInput
+  tasks_some: TaskWhereInput
+  tasks_none: TaskWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
