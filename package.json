@@ -14,7 +14,8 @@
     "get-schema": "graphql get-schema -p prisma --dotenv env/dev.env",
     "test": "env-cmd env/test.env jest --watch --runInBand",
     "lint": "tslint --project tsconfig.json",
-    "prod": "tsc && node ./build/index.js"
+    "prod": "tsc && node ./build/index.js",
+    "prisma-deploy": "prisma deploy -e env/dev.env"
   },
   "dependencies": {
     "apollo-errors": "^1.9.0",

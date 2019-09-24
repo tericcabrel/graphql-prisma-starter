@@ -1,0 +1,60 @@
+# import TaskOrderByInput from './prisma.graphql'
+
+type Query {
+    getTasks(query: String, first: Int, skip: Int, after: String, orderBy: TaskOrderByInput): [Task!]!
+    getTask(id: String!): Task
+}
+
+type Mutation {
+    createTask(data: CreateTaskInput): Task!
+    updateTask(data: UpdateTaskInput): Task!
+    deleteTasks(id: [String!]): Task!
+}
+
+type Subscription {
+    task: TaskSubscriptionPayload!
+}
+
+type Task {
+    title: String!
+    description: String!
+    date: DateTime!
+    status: TaskStatusType!
+    is_important: Boolean!
+    updated_at: DateTime!
+    created_at: DateTime!
+}
+
+enum TaskStatusType {
+    PENDING
+    ONGOING
+    DONE
+    CANCELLED
+}
+
+input CreateTaskInput {
+    title: String!
+    description: String!
+    date: DateTime!
+    status: TaskStatusType!
+    is_important: Boolean
+}
+
+input UpdateTaskInput {
+    title: String
+    description: String
+    data: DateTime
+    status: TaskStatusType
+    is_important: Boolean
+}
+
+enum TaskMutationType {
+    CREATED
+    UPDATED
+    DELETED
+}
+
+type TaskSubscriptionPayload {
+    mutation: TaskMutationType!
+    data: Task!
+}
