@@ -8,7 +8,7 @@ type Query {
 type Mutation {
     createTask(data: CreateTaskInput): Task!
     updateTask(data: UpdateTaskInput): Task!
-    deleteTasks(id: [String!]): Task!
+    deleteTask(ids: [String!]): Task!
 }
 
 type Subscription {
@@ -19,7 +19,7 @@ type Task {
     title: String!
     description: String!
     date: DateTime!
-    status: TaskStatusType!
+    status: String! #TaskStatusType!
     is_important: Boolean!
     creator: User!
     updated_at: DateTime!
@@ -43,15 +43,16 @@ input CreateTaskInput {
     title: String!
     description: String!
     date: DateTime!
-    status: TaskStatusType!
+    status: String! #TaskStatusType!
     is_important: Boolean
+    user_id: String!
 }
 
 input UpdateTaskInput {
     title: String
     description: String
     data: DateTime
-    status: TaskStatusType
+    status: String #TaskStatusType
     is_important: Boolean
 }
 

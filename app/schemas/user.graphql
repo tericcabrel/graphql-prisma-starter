@@ -21,11 +21,11 @@ type Mutation {
 type User {
     id: ID!
     name: String!
-    email: String
-    password: String
-    tasks: [Task!]!
-    updated_at: String!
-    created_at: String!
+    email: String!
+    password: String!
+    updated_at: DateTime!
+    created_at: DateTime!
+    tasks: [Task!]
 }
 
 enum MutationType {

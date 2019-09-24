@@ -3,6 +3,7 @@ import queries from './queries';
 import subscriptions from './subscriptions';
 
 import { GraphContext } from '../../types/common';
+import {GraphQLResolveInfo} from 'graphql';
 
 export default {
   Mutation: mutations,
@@ -15,12 +16,24 @@ export default {
         if (userId && userId === parent.id) {
           return parent.email;
         }
-        return null;
+        return 'hidden';
       },
     },
     password: {
       resolve(parent: any, args: any, context: GraphContext, info: any) {
-        return null;
+        return 'hidden';
+      },
+    },
+    tasks: {
+      fragment: 'fragment UserId on User { id }',
+      resolve(parent: any, args: any, { prisma }: GraphContext, info: GraphQLResolveInfo) {
+        return prisma.query.tasks({
+          where: {
+            creator: {
+              id: parent.id,
+            },
+          },
+        });
       },
     },
   },

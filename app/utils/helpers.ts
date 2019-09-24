@@ -56,7 +56,7 @@ export const combineSchema = (dirPath: string) => {
 
   // Load the files in temp folder with graphql-merge-schemas
   const typesArray = fileLoader(path.join(tmpFolder), { recursive: false });
-  const typeDefs = mergeTypes(typesArray, { all: true });
+  const typeDefs = mergeTypes(typesArray, { });
 
   removeDir(tmpFolder);
 
