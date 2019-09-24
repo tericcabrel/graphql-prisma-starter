@@ -47,10 +47,9 @@ export const combineSchema = (dirPath: string) => {
   const excludedFiles = ['index.ts', 'prisma.graphql', 'joined.graphql'];
   const files = fs.readdirSync(dirPath, { encoding: 'utf-8' });
   for (const file of files) {
-    let str = '';
     if (!fs.statSync(`${dirPath}${file}`).isDirectory() && excludedFiles.indexOf(file) < 0) {
-      console.log(`${dirPath}${file}`);
-      str += importSchema(`${dirPath}/${file}`);
+      // console.log(`${dirPath}${file}`);
+      const str = importSchema(`${dirPath}/${file}`);
       fs.writeFileSync(`${tmpFolder}/${file}`, str, { encoding: 'utf8' });
     }
   }

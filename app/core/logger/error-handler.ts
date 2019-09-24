@@ -2,7 +2,7 @@ import {
   isInstance as isApolloErrorInstance,
   formatError as formatApolloError,
 } from 'apollo-errors';
-import { Logger } from './logger';
+import { logger } from './logger';
 
 export const formatError =  (error: any) => {
   const { originalError } = error;
@@ -15,7 +15,7 @@ export const formatError =  (error: any) => {
     return formatApolloError(error);
   }
 
-  Logger.error({
+  logger.error({
     message: `[${ error.path ? error.path.join(' - ') : 'Prisma' }] => ${error.stack ? error.stack.toString() : error.message }`,
   });
   return error;
