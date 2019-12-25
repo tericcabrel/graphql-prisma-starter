@@ -2,13 +2,13 @@
 // Please don't change this file manually but run `prisma generate` to update it.
 // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-import { DocumentNode } from "graphql";
+import { DocumentNode } from 'graphql';
 import {
   makePrismaClientClass,
   BaseClientOptions,
-  Model
-} from "prisma-client-lib";
-import { typeDefs } from "./prisma-schema";
+  Model,
+} from 'prisma-client-lib';
+import { typeDefs } from './prisma-schema';
 
 export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
   U[keyof U];
@@ -32,7 +32,7 @@ export interface Prisma {
   $exists: Exists;
   $graphql: <T = any>(
     query: string,
-    variables?: { [key: string]: any }
+    variables?: { [key: string]: any },
   ) => Promise<T>;
 
   /**
@@ -125,10 +125,10 @@ export interface Prisma {
 
 export interface Subscription {
   task: (
-    where?: TaskSubscriptionWhereInput
+    where?: TaskSubscriptionWhereInput,
   ) => TaskSubscriptionPayloadSubscription;
   user: (
-    where?: UserSubscriptionWhereInput
+    where?: UserSubscriptionWhereInput,
   ) => UserSubscriptionPayloadSubscription;
 }
 
@@ -141,38 +141,38 @@ export interface ClientConstructor<T> {
  */
 
 export type TaskOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "title_ASC"
-  | "title_DESC"
-  | "description_ASC"
-  | "description_DESC"
-  | "date_ASC"
-  | "date_DESC"
-  | "status_ASC"
-  | "status_DESC"
-  | "is_important_ASC"
-  | "is_important_DESC"
-  | "updated_at_ASC"
-  | "updated_at_DESC"
-  | "created_at_ASC"
-  | "created_at_DESC";
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'title_ASC'
+  | 'title_DESC'
+  | 'description_ASC'
+  | 'description_DESC'
+  | 'date_ASC'
+  | 'date_DESC'
+  | 'status_ASC'
+  | 'status_DESC'
+  | 'is_important_ASC'
+  | 'is_important_DESC'
+  | 'updated_at_ASC'
+  | 'updated_at_DESC'
+  | 'created_at_ASC'
+  | 'created_at_DESC';
 
 export type UserOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
-  | "email_ASC"
-  | "email_DESC"
-  | "password_ASC"
-  | "password_DESC"
-  | "updated_at_ASC"
-  | "updated_at_DESC"
-  | "created_at_ASC"
-  | "created_at_DESC";
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
+  | 'email_ASC'
+  | 'email_DESC'
+  | 'password_ASC'
+  | 'password_DESC'
+  | 'updated_at_ASC'
+  | 'updated_at_DESC'
+  | 'created_at_ASC'
+  | 'created_at_DESC';
 
-export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+export type MutationType = 'CREATED' | 'UPDATED' | 'DELETED';
 
 export interface UserUpdateOneRequiredWithoutTasksInput {
   create?: Maybe<UserCreateWithoutTasksInput>;
@@ -1047,13 +1047,13 @@ export type Int = number;
 
 export const models: Model[] = [
   {
-    name: "User",
-    embedded: false
+    name: 'User',
+    embedded: false,
   },
   {
-    name: "Task",
-    embedded: false
-  }
+    name: 'Task',
+    embedded: false,
+  },
 ];
 
 /**
@@ -1063,7 +1063,7 @@ export const models: Model[] = [
 export const Prisma = makePrismaClientClass<ClientConstructor<Prisma>>({
   typeDefs,
   models,
-  endpoint: `${process.env["PRISMA_ENDPOINT"]}`,
-  secret: `${process.env["PRISMA_SECRET"]}`
+  endpoint: `${process.env['PRISMA_ENDPOINT']}`,
+  secret: `${process.env['PRISMA_SECRET']}`,
 });
 export const prisma = new Prisma();

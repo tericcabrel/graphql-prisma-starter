@@ -3,7 +3,7 @@ import server from './bootstrap/server';
 import { logger } from './core/logger/logger';
 import { formatError } from './core/logger/error-handler';
 
-const port = parseInt(process.env.PORT || '4000', 10);
+const port: number = parseInt(process.env.PORT || '4000', 10);
 
 const options = {
   port,
